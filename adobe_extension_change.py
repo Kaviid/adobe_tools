@@ -1,6 +1,7 @@
 
 import re
 from pathlib import Path
+import sys
 
 #Get User extension which user need to change
 def correct_format () :
@@ -12,7 +13,8 @@ def correct_format () :
     elif user_format == 'svg':
         return '.svg'
     else:
-        print('Usage <1, 2, 3 | ai, eps, svg>')
+        print('Usage <ai, eps, svg>')
+        sys.exit(1)
 
 #Store orginal csv data
 def Get_metadata (path) :
@@ -24,8 +26,11 @@ def Get_metadata (path) :
 def replace_format (ext_name,content,path):
     updated = [] #Collect changed each files
     for line in content:
-        m = re.sub(r'\.([a-zA-Z0-9]+)', ext_name , line)
-        updated.append(m)
+        splited_line = line.split(',') #Checked untill here : DONE
+        m = re.sub(r'\.([a-zA-Z0-9]+)', ext_name , splited_line[0])
+        splited_line[0] = m
+        joined_again = ",".join(splited_line)
+        updated.append(joined_again)
 
     with open (path, 'w') as file : #Change orginal file
         for i in updated:
@@ -33,11 +38,10 @@ def replace_format (ext_name,content,path):
                 file.write(i)
 
 user_file_name =  input('Enter file name : ')
-path = Path(__file__).parent.resolve() / user_file_name
+path = Path(__file__).parent.resolve() / user_file_name #Get path
 
 replace_format( 
     correct_format() , 
     Get_metadata (path),
     path
     )
-
