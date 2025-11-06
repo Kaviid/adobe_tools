@@ -38,11 +38,10 @@ def replace_format (ext_name,content,path):
                 file.write(i)
 
 user_file_name =  input('Enter file name : ')
-path = Path(__file__).parent.resolve() / user_file_name
+path = Path(__file__).parent.resolve() / user_file_name #Get path
 
 replace_format( 
     correct_format() , 
     Get_metadata (path),
     path
     )
-
