@@ -6,21 +6,19 @@ import sys
 #Get User extension which user need to change
 def correct_format () :
     user_format = input('Which extension u need to convert : ').lower().strip()
-    if user_format == 'ai':
-        return '.ai'
-    elif user_format == 'eps':
-        return '.eps'
-    elif user_format == 'svg':
-        return '.svg'
-    else:
-        print('Usage <ai, eps, svg>')
-        sys.exit(1)
+    if user_format in ('ai', 'eps', 'svg'):
+        return f'.{user_format}'
+    print('Usage: <ai, eps, svg>')
+    sys.exit(1)
 
 #Store orginal csv data
 def Get_metadata (path) :
-    with open(path, 'r') as file:
-        content = file.readlines()
-    return content
+    try :
+        with open(path, 'r') as file:
+            return file.readlines()
+    except FileNotFoundError:
+        print(f"Error: file '{path.name}' not found.")
+        sys.exit(1)
 
 #Replace orginal one to we want version
 def replace_format (ext_name,content,path):
@@ -37,11 +35,7 @@ def replace_format (ext_name,content,path):
             if i.strip(): #Ignore if have any blank or empty lines
                 file.write(i)
 
-user_file_name =  input('Enter file name : ')
-path = Path(__file__).parent.resolve() / user_file_name #Get path
-
-replace_format( 
-    correct_format() , 
-    Get_metadata (path),
-    path
-    )
+if __name__ == "__main__":
+    user_file_name =  input('Enter file name : ')
+    path = Path(__file__).parent.resolve() / user_file_name #Get path
+    replace_format(correct_format() , Get_metadata (path), path)
