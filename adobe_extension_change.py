@@ -1,6 +1,7 @@
 
 import re
 from pathlib import Path
+import sys
 
 #Get User extension which user need to change
 def correct_format () :
@@ -13,6 +14,7 @@ def correct_format () :
         return '.svg'
     else:
         print('Usage <1, 2, 3 | ai, eps, svg>')
+        sys.exit(1)
 
 #Store orginal csv data
 def Get_metadata (path) :
