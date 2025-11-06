@@ -13,7 +13,7 @@ def correct_format () :
     elif user_format == 'svg':
         return '.svg'
     else:
-        print('Usage <1, 2, 3 | ai, eps, svg>')
+        print('Usage <ai, eps, svg>')
         sys.exit(1)
 
 #Store orginal csv data
