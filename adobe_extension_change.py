@@ -26,8 +26,11 @@ def Get_metadata (path) :
 def replace_format (ext_name,content,path):
     updated = [] #Collect changed each files
     for line in content:
-        m = re.sub(r'\.([a-zA-Z0-9]+)', ext_name , line)
-        updated.append(m)
+        splited_line = line.split(',') #Checked untill here : DONE
+        m = re.sub(r'\.([a-zA-Z0-9]+)', ext_name , splited_line[0])
+        splited_line[0] = m
+        joined_again = ",".join(splited_line)
+        updated.append(joined_again)
 
     with open (path, 'w') as file : #Change orginal file
         for i in updated:
